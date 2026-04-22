@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-First PM: How I Build with Claude Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Home-specific ── */
+    .hero {
+      padding: 80px 0 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
+    .hero .subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    .hero .subtitle strong { color: var(--fg); font-weight: 600; }
+
+    .thesis {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .thesis p {
+      font-size: 17px;
+      color: #374151;
+      line-height: 1.8;
+    }
+    .thesis p + p { margin-top: 16px; }
+
+    .projects { padding: 56px 0; }
+
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 24px;
+      transition: box-shadow 0.2s;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .project-card:hover {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .project-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .project-card .summary {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .project-card .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .project-card .card-stats {
+      display: flex;
+      gap: 20px;
+    }
+    .project-card .card-stat {
+      text-align: center;
+    }
+    .project-card .card-stat .num {
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .project-card .card-stat .desc {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .project-card .read-more {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .project-card .read-more svg { width: 14px; height: 14px; }
+
+    /* ── Daily System (compact) ── */
+    .daily-system {
+      padding: 56px 0;
+      border-top: 1px solid var(--border);
+    }
+    .daily-system .section-intro {
+      font-size: 17px;
+      color: #374151;
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 640px;
+    }
+
+    /* ── How I Work ── */
+    .workflow {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+    .workflow h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .workflow-steps { display: grid; gap: 16px; }
+    .step { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--fg); color: var(--bg);
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .step-content p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Portfolio</div>
+      <h1>AI-First PM:<br/>I Spec It, Then I Build It</h1>
+      <p class="subtitle">
+        I'm a Product Manager who uses <strong>Claude Code</strong> to go from problem to working product: not wireframes, not slide decks, <strong>working software</strong>. Here's what I've shipped and how I think.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Thesis ── -->
+  <section class="thesis">
+    <div class="container">
+      <p>
+        Most PMs hand off specs and wait. I write the spec, then build the first version myself: using AI to compress what used to take a sprint into a few focused sessions. Not to replace engineers, but to validate faster, have better conversations, and ship things that would otherwise never make it off the backlog.
+      </p>
+      <p>
+        At work, I built a full dealer intelligence dashboard to prototype the product vision for Spyne's AI platform and validated it directly with customers. On my own time, I scratched a personal itch and shipped a personalised podcast generator. Both were built end-to-end with Claude Code.
+      </p>
+      <div class="callout">
+        The best product intuition comes from building. AI lets me stay in that loop without context-switching to a different team's roadmap.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Projects ── -->
+  <section class="projects">
+    <div class="container">
+      <h2 class="section-label">What I've Built</h2>
+
+      <a href="spyne-console.html" class="project-card">
+        <div class="project-labels">
+          <div class="project-label label-purple">Full-Stack Product</div>
+          <div class="project-label label-work">Work</div>
+        </div>
+        <h3>Spyne Dealer Intelligence Dashboard</h3>
+        <p class="summary">
+          As we scaled Spyne's AI sales agent to 30+ dealerships, the ROI was invisible to dealers: making renewals harder and expansion conversations vague. I built the dealer-facing console myself (Overview, Action Items, Appointments, Leads) and validated designs directly with dealers.
+        </p>
+        <div class="card-footer">
+          <div class="card-stats">
+            <div class="card-stat">
+              <div class="num">90+</div>
+              <div class="desc">Components</div>
+            </div>
+            <div class="card-stat">
+              <div class="num">6,600+</div>
+              <div class="desc">Lines of code</div>
+            </div>
+            <div class="card-stat">
+              <div class="num">10</div>
+              <div class="desc">Modules</div>
+            </div>
+          </div>
+          <span class="read-more">
+            Read case study
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a href="podcast.html" class="project-card">
+        <div class="project-labels">
+          <div class="project-label label-green">AI Pipeline</div>
+          <div class="project-label label-personal">Personal</div>
+        </div>
+        <h3>Between the Pages: Personalised Podcast Generator</h3>
+        <p class="summary">
+          I don't have a reading habit, but I can listen to podcasts. Every existing book-to-audio tool (including NotebookLM) generates the same content for everyone. I built one that adapts framing, examples, and takeaways to your role and context.
+        </p>
+        <div class="card-footer">
+          <div class="card-stats">
+            <div class="card-stat">
+              <div class="num">E2E</div>
+              <div class="desc">Built solo</div>
+            </div>
+            <div class="card-stat">
+              <div class="num">~3,000</div>
+              <div class="desc">Lines of code</div>
+            </div>
+            <div class="card-stat">
+              <div class="num">30-45m</div>
+              <div class="desc">Podcast output</div>
+            </div>
+          </div>
+          <span class="read-more">
+            Read case study
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Daily PM Operating System ── -->
+  <section class="daily-system">
+    <div class="container">
+      <h2 class="section-label">Beyond Building: Claude Code as a Daily PM Tool</h2>
+      <p class="section-intro">
+        The projects above are the visible output. Underneath them is a persistent PM operating system I've built inside Claude Code: a structured repo that handles spec writing, stakeholder simulation, data analysis, and documentation across 27+ project folders.
+      </p>
+
+      <!-- Persona System -->
+      <div class="system-card">
+        <h3>The Persona System</h3>
+        <p class="card-subtitle">
+          I built 6 detailed personas that Claude adopts when invoked: each modelled on real stakeholders with real opinions, red flags, and trust signals. Every spec gets pressure-tested by simulated stakeholders before a single human reviews it.
+        </p>
+        <table class="persona-table">
+          <thead>
+            <tr><th>Persona</th><th>Role</th><th>What they pressure-test</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="persona-name">Sanjay</td><td>CEO</td><td>Strategic fit, resource tradeoffs, "why now?"</td></tr>
+            <tr><td class="persona-name">Sahil</td><td>Senior Backend Engineer</td><td>Technical feasibility, edge cases, scope risk</td></tr>
+            <tr><td class="persona-name">Jordan</td><td>Senior Product Designer</td><td>UX gaps, user journey blind spots</td></tr>
+            <tr><td class="persona-name">Mike</td><td>Dealership GM (22-yr veteran)</td><td>"Will this work on a busy Saturday?"</td></tr>
+            <tr><td class="persona-name">Priya</td><td>Product Analyst</td><td>Data verification, metric integrity</td></tr>
+          </tbody>
+        </table>
+        <div class="system-example">
+          <div class="example-label">In practice</div>
+          When I designed the inbound agent follow-up sequences, I ran the spec through three personas in one session. <strong>Mike (Dealership GM)</strong> caught that the hot-lead handoff protocol was missing: <em>"A customer replies to your Day 2 SMS at 11am on a Saturday: 'I'm ready to buy.' What happens next?"</em> <strong>Sahil (Engineer)</strong> questioned the retry logic and CRM write-back complexity. <strong>Sanjay (CEO)</strong> asked whether the effort was proportional to the revenue impact. Three rounds of feedback before a single human reviewed the doc.
+        </div>
+      </div>
+
+      <!-- Persistent Context -->
+      <div class="system-card">
+        <h3>Persistent Context, Not Cold Starts</h3>
+        <p class="card-subtitle">
+          My Claude Code workspace isn't a chat window. It's a structured repository with ground truth context, enforced constraints, and compounding knowledge.
+        </p>
+        <ul>
+          <li><strong>Every session starts grounded in product context.</strong> Claude reads the product context file, dealer economics model, and domain knowledge before any work begins. No hallucinated capabilities.</li>
+          <li><strong>Every feature is anchored to dealer economics.</strong> A car sitting on the lot costs ~$50/day. If a feature doesn't reduce days-in-inventory or protect gross margin, it doesn't ship.</li>
+          <li><strong>Enforced writing style.</strong> Plain language, active voice, no filler, no jargon. "Response time dropped from 3 days to 4 hours": not "significant improvement in key metrics."</li>
+          <li><strong>Memory across sessions.</strong> Decisions, open items, who reviewed what: Claude picks up where we left off. Six months of PM work, continuously compounding.</li>
+        </ul>
+      </div>
+
+      <!-- Analytics -->
+      <div class="system-card">
+        <h3>Agent Performance Analytics</h3>
+        <p class="card-subtitle">
+          I built a full analytics pipeline to run weekly agent performance reviews: something that would normally require a dedicated analyst.
+        </p>
+        <ul>
+          <li>7 Python scripts processing real call data: intent classification, outcome tiering, duration bucketing, transcript sampling</li>
+          <li>Weekly reports covering 450+ calls across 18 dealerships with tiered call funnels and intent-level resolve rates</li>
+          <li>Every finding tied back to business impact: which intent gaps cost the most in lost appointments, what prompt changes would move the needle</li>
+        </ul>
+      </div>
+
+      <!-- What ships through this -->
+      <div class="system-card">
+        <h3>What Ships Through This System</h3>
+        <p class="card-subtitle">
+          Everything from feature specs to compliance research runs through the same Claude Code workflow:
+        </p>
+        <ul>
+          <li><strong>Feature specs:</strong> CRM integration improvements, appointment booking nudge frameworks, outbound agent designs, SMS-first agent requirements: each persona-reviewed and anchored to dealer ROI</li>
+          <li><strong>Conversation design:</strong> Complete flows across 4 customer journeys (lease-end, trade-in, service cross-sell, appointment confirmation) with 22+ test scenarios</li>
+          <li><strong>Compliance research:</strong> TCPA, FCC, state-level DNC requirements for AI voice agents: disclosure, recording consent, opt-out tracking, PEWC for outbound</li>
+          <li><strong>Evaluation frameworks:</strong> LLM-based agent eval system across 6 dimensions (information accuracy, tool usage, conversation quality, escalation handling, conversion) running on every call</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How I Work ── -->
+  <section class="workflow">
+    <div class="container">
+      <h2>How I Work with Claude Code</h2>
+      <div class="workflow-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Start with the user problem, not the tech</h4>
+            <p>I describe what the user needs to accomplish: "A dealer principal needs to know in 30 seconds if they're bleeding money on aged inventory." The product thinking drives the conversation; the code follows.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Iterate through conversation, like a pairing session</h4>
+            <p>I treat Claude Code like a senior engineer sitting next to me. I review output, push back on UX decisions, ask for alternatives, and refine until the product feels right.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Validate with real users, not just stakeholders</h4>
+            <p>The output isn't a mockup: it's a running application. I put the Spyne dashboard in front of BDC managers, dealer GMs, and industry veterans. They clicked through it, stress-tested the numbers, and gave feedback that reshaped the product.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Ship working software, not slide decks</h4>
+            <p>Both projects are deployed and live. Working software creates conversations that wireframes can't.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <span class="comment"># Problem first, code second</span><br/>
+        <span class="prompt">$</span> claude <span class="flag">"Build a morning plan widget that shows a dealer's top 5 priorities based on inventory age, lead pipeline, and yesterday's missed opportunities"</span><br/><br/>
+        <span class="comment"># Iterate with domain knowledge</span><br/>
+        <span class="prompt">$</span> claude <span class="flag">"The holding cost calculator should show daily burn rate, not monthly: dealers think in days"</span><br/><br/>
+        <span class="comment"># Build a personalised podcast from any book</span><br/>
+        <span class="prompt">$</span> claude <span class="flag">"Add a profile questionnaire before generation: the podcast examples and framing should adapt to the listener's role and current challenges"</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <section class="footer">
+    <div class="container">
+      <p style="font-size: 16px; font-weight: 600; color: var(--fg); margin-bottom: 4px;">Yash: a PM who builds.</p>
+      <p>Built with Claude Code, obviously.</p>
+    </div>
+  </section>
+
+</body>
+</html>

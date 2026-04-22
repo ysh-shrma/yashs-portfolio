@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Between the Pages: Personalised Podcast Generator: AI-First PM Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-header {
+      padding: 40px 0 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      margin: 20px 0 12px;
+    }
+    .page-header .subtitle {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-of-type { border-bottom: none; }
+    .section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .section p {
+      font-size: 15px;
+      color: #374151;
+      line-height: 1.8;
+    }
+    .section p + p { margin-top: 12px; }
+
+    .links-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .pipeline-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    .pipeline-num {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pipeline-content h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .pipeline-content p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="page-header">
+    <div class="container">
+      <a href="index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+        Back to portfolio
+      </a>
+      <h1>Between the Pages</h1>
+      <div class="project-labels">
+        <div class="project-label label-green">AI Pipeline</div>
+        <div class="project-label label-personal">Personal</div>
+      </div>
+      <p class="subtitle">
+        A personalised book-to-podcast generator. Upload a book, answer a short profile, and get a two-voice audio podcast where the framing, examples, and takeaways adapt to your context.
+      </p>
+      <div class="links-row">
+        <a href="https://between-the-pages.vercel.app/" target="_blank" rel="noopener" class="live-link">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+          Try It Live
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Why I Built This ── -->
+  <section class="section">
+    <div class="container">
+      <h2>Why I Built This</h2>
+      <p>
+        I don't have a reading habit, but I kept running into books people around me swore by. I can listen to podcasts though, so one solution was to build a tool that converts books into audio.
+      </p>
+      <p>
+        Except every existing tool (including NotebookLM) generates the same content for everyone, with generic examples that don't map to what I'm actually dealing with at work. A PM managing an AI agent for auto dealerships and a designer at a fintech startup should get completely different takeaways from the same book.
+      </p>
+      <p>
+        I built this to generate a podcast that <em>knows who I am</em> and what problems I'm trying to solve.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── What Makes It Different ── -->
+  <section class="section">
+    <div class="container">
+      <h2>What Makes It Different</h2>
+      <div class="detail-grid" style="margin-top: 16px;">
+        <div class="detail-box">
+          <div class="label">The problem with existing tools</div>
+          <div class="value">Every book-to-audio tool gives everyone the same output: same examples, same framing, same generic takeaways regardless of who you are or what you're working on</div>
+        </div>
+        <div class="detail-box">
+          <div class="label">What this does instead</div>
+          <div class="value">You fill out a short profile (role, challenges, what you're trying to learn), and the entire podcast: framing, examples, takeaways: adapts to your context. A PM and a designer get different podcasts from the same book</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How It Works ── -->
+  <section class="section">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div style="margin-top: 20px;">
+        <div class="pipeline-step">
+          <div class="pipeline-num">1</div>
+          <div class="pipeline-content">
+            <h4>Extract</h4>
+            <p>EPUB is parsed into clean chapter text. TOC, copyright, and blank pages are filtered out automatically.</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">2</div>
+          <div class="pipeline-content">
+            <h4>Digest</h4>
+            <p>Each chapter is summarised by an LLM, with your profile context injected so the digest emphasises what matters to you.</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">3</div>
+          <div class="pipeline-content">
+            <h4>Script</h4>
+            <p>Chapter digests are woven into a two-voice podcast script (host + author). The framing and examples are personalised to your role and challenges.</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">4</div>
+          <div class="pipeline-content">
+            <h4>Synthesize</h4>
+            <p>Script is converted to multi-voice audio using Edge neural voices, batched asynchronously, then stitched into a single podcast MP3.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What I Built ── -->
+  <section class="section">
+    <div class="container">
+      <h2>What I Built with Claude Code</h2>
+
+      <div class="tags" style="margin-top: 16px;">
+        <span class="tag">Python</span>
+        <span class="tag">React</span>
+        <span class="tag">Claude API</span>
+        <span class="tag">Edge TTS</span>
+        <span class="tag">Async Jobs</span>
+        <span class="tag">pydub</span>
+        <span class="tag">Claude Code</span>
+      </div>
+
+      <div class="content-section" style="margin-top: 16px;">
+        <ul>
+          <li>Designed the multi-stage pipeline architecture: extract, digest, script, synthesize: each stage composable and independently cacheable</li>
+          <li>Built the personalisation layer: a short profile questionnaire that feeds context into every stage of the generation, so examples and framing adapt to who you are</li>
+          <li>Engineered the two-voice podcast format (host + author) with natural conversational flow, not robotic alternating monologues</li>
+          <li>Built the full React frontend with upload flow, job status tracking, and an in-browser podcast player</li>
+          <li>Added cost-saving features: cached digests so re-runs don't re-process chapters, skip flags for iteration, and batched async TTS (10 clips at a time) to keep generation fast</li>
+          <li>Built the entire thing solo: spec, Python backend with async job processing, TTS stitching, and frontend</li>
+        </ul>
+      </div>
+
+      <div class="stats-row" style="margin-top: 28px;">
+        <div class="stat">
+          <div class="num">E2E</div>
+          <div class="desc">Built solo</div>
+        </div>
+        <div class="stat">
+          <div class="num">~3,000</div>
+          <div class="desc">Lines of code</div>
+        </div>
+        <div class="stat">
+          <div class="num">30-45m</div>
+          <div class="desc">Podcast output</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <section class="footer">
+    <div class="container">
+      <a href="index.html" class="back-link" style="margin-bottom: 16px;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+        Back to portfolio
+      </a>
+      <p style="margin-top: 12px;">Built with Claude Code, obviously.</p>
+    </div>
+  </section>
+
+</body>
+</html>
