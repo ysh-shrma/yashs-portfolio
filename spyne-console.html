@@ -3,216 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spyne Dealer Intelligence Dashboard: AI-First PM Portfolio</title>
+  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <title>Spyne Dealer Intelligence Dashboard · Yash</title>
+  <meta name="description" content="A dealer-facing intelligence dashboard I designed, built, and validated with real dealers: using Claude Code to go from product vision to interactive, validated prototype without a designer." />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="os.css" />
   <style>
-    .page-header {
-      padding: 40px 0 48px;
-      border-bottom: 1px solid var(--border);
-    }
-    .page-header h1 {
-      font-size: 36px;
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.025em;
-      margin: 20px 0 12px;
-    }
-    .page-header .subtitle {
-      font-size: 17px;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 600px;
-    }
+    /* Spyne-specific */
+    body::before { background: radial-gradient(ellipse at center, rgba(108,182,255,0.09), transparent 62%); }
+    .kicker { color: var(--blue); }
+    .hero h1 { font-size: clamp(32px, 5.5vw, 52px); }
 
-    .section {
-      padding: 48px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .section:last-of-type { border-bottom: none; }
-    .section h2 {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-    .section p {
-      font-size: 15px;
-      color: #374151;
-      line-height: 1.8;
-    }
-    .section p + p { margin-top: 12px; }
+    .quote { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:0 12px 12px 0; padding:22px 24px; margin-top:16px; }
+    .quote .q { font-size:16.5px; color:var(--fg); line-height:1.65; font-style:italic; }
+    .quote .attr { font-size:13.5px; color:var(--muted); line-height:1.6; margin-top:12px; }
+    .quote .attr b { color:var(--body); font-weight:600; }
 
-    .links-row {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
+    .sub { margin-top:28px; }
+    .sub h4 { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; margin-bottom:8px; }
+    .sub p { margin-bottom:12px; }
   </style>
 </head>
 <body>
 
-  <section class="page-header">
-    <div class="container">
-      <a href="index.html" class="back-link">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
-        Back to portfolio
-      </a>
-      <h1>Spyne Dealer Intelligence Dashboard</h1>
-      <div class="project-labels">
-        <div class="project-label label-purple">Full-Stack Product</div>
-        <div class="project-label label-work">Work</div>
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand"><span class="dot"></span>yash<span style="color:var(--faint)">/pm</span></a>
+      <div class="nav-right">
+        <button class="theme-toggle" type="button" aria-label="Toggle light or dark theme">
+          <svg class="i-sun" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+          <svg class="i-moon" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
+        </button>
+        <a href="index.html" class="back">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+          All work
+        </a>
       </div>
-      <p class="subtitle">
-        A dealer-facing intelligence dashboard I designed, built, and validated with real customers: using Claude Code to go from product vision to interactive prototype without a designer.
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="kicker">Work · Spyne · full-stack product</div>
+      <h1>Spyne Dealer Intelligence Dashboard.</h1>
+      <p class="lede">
+        A dealer-facing intelligence dashboard I designed, built, and validated with real dealers: using Claude Code to go from product vision to an <strong>interactive, validated prototype</strong> without a designer.
       </p>
-      <div class="links-row">
-        <a href="https://dealer-console.vercel.app/max-2/sales" target="_blank" rel="noopener" class="live-link">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-          View Live Dashboard
+      <div class="hero-actions">
+        <a href="https://dealer-console.vercel.app/max-2/sales" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+          View live dashboard
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ── The Problem ── -->
-  <section class="section">
-    <div class="container">
-      <h2>The Problem</h2>
-      <p>
-        As we scaled Vini, Spyne's conversational AI agent for US auto dealerships, to 30+ rooftops, the agents were doing real work: handling calls, booking appointments, running outbound campaigns. But dealers had no way to see the value being created. The ROI was invisible, which made renewals harder and expansion conversations vague.
-      </p>
-      <p>
-        The console experience was long overdue for a redesign, which kept getting pushed back to focus on AI agent quality and better outcomes for the dealers.
-      </p>
-      <p>
-        As the PM, I took this on end-to-end: not just defining how it should work, but building the functional prototype myself without a designer and validating the designs directly with dealers.
-      </p>
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">The problem</div>
+      <h2 class="st">The agents were doing real work. Dealers couldn't see it.</h2>
+      <p>As we scaled Vini, Spyne's conversational AI agent for US auto dealerships, to 30+ rooftops, the agents were handling calls, booking appointments, and running outbound campaigns. But dealers had no way to see the value being created. The ROI was invisible, which made renewals harder and expansion conversations vague.</p>
+      <p>The console experience was long overdue for a redesign that kept getting pushed back to focus on AI agent quality and dealer outcomes.</p>
+      <p>As the PM, I took this on end-to-end: not just defining how it should work, but <strong>building the functional prototype myself without a designer</strong> and validating the designs directly with dealers.</p>
     </div>
   </section>
 
-  <!-- ── What I Built ── -->
-  <section class="section">
-    <div class="container">
-      <h2>What I Built with Claude Code</h2>
-
-      <div class="detail-grid" style="margin-top: 20px;">
-        <div class="detail-box">
-          <div class="label">What it is</div>
-          <div class="value">Dealer-facing console for Spyne's AI sales agent: an Overview dashboard, Action Items queue, Appointments tracker, and Leads by Source funnel</div>
-        </div>
-        <div class="detail-box">
-          <div class="label">Why I built it this way</div>
-          <div class="value">A working spec, not a Figma file: so we could validate with real dealers immediately instead of waiting for engineering bandwidth</div>
-        </div>
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">What I built</div>
+      <h2 class="st">A working console, not a Figma file.</h2>
+      <div class="detail-grid">
+        <div class="detail-box"><div class="k">What it is</div><div class="v">A dealer-facing console for Spyne's AI sales agent: an Overview dashboard, Action Items queue, Appointments tracker, and Leads by Source funnel.</div></div>
+        <div class="detail-box"><div class="k">Why I built it this way</div><div class="v">A working spec, not a mockup, so we could validate with real dealers immediately instead of waiting for engineering bandwidth.</div></div>
       </div>
-
-      <div class="tags" style="margin-top: 20px;">
-        <span class="tag">Next.js</span>
-        <span class="tag">TypeScript</span>
-        <span class="tag">Tailwind CSS</span>
-        <span class="tag">shadcn/ui</span>
-        <span class="tag">React Context</span>
-        <span class="tag">REST APIs</span>
-        <span class="tag">Claude Code</span>
+      <div class="pills">
+        <span class="pill">Next.js</span><span class="pill">TypeScript</span><span class="pill">Tailwind CSS</span>
+        <span class="pill">shadcn/ui</span><span class="pill">React Context</span><span class="pill">REST APIs</span><span class="pill">Claude Code</span>
       </div>
+      <ul class="flist">
+        <li><b>Overview dashboard:</b> a 5-metric strip (leads interacted, qualified, after-hours, handoffs, appointments booked), a Speed-to-Lead panel with week-over-week trends, and a full-funnel Leads by Source table tracing every lead from source to sold.</li>
+        <li><b>Action Items (redesigned):</b> replaced an unusable flat list of "Reach out to customer" items with a prioritised card queue: urgency indicators, typed actions ("Schedule Test Drive," "Trade-In Follow-Up"), due dates, and one-click follow-ups.</li>
+        <li><b>Appointments:</b> tracking with show-rate visibility, confirmation cadence, and the booking-to-sold funnel dealers use to judge ROI.</li>
+        <li><b>Leads by Source:</b> channel-level performance (internet, walk-in, phone, other) with connect, appointment, show, and close rates, separating "our work" from "dealership work" with a visual dashed border.</li>
+        <li>A demo scenario system with mock data pipelines, so stakeholders could click through the product before backend APIs existed.</li>
+      </ul>
+      <div class="stats-row">
+        <div class="stat"><div class="num">90+</div><div class="desc">component files</div></div>
+        <div class="stat"><div class="num">6,600+</div><div class="desc">lines of code</div></div>
+        <div class="stat"><div class="num">10</div><div class="desc">dashboard modules</div></div>
+      </div>
+    </div>
+  </section>
 
-      <div class="content-section" style="margin-top: 20px;">
-        <ul>
-          <li><strong>Overview dashboard:</strong> 5-metric strip at the top (leads interacted, qualified, after-hours, handoffs, appointments booked), a Speed-to-Lead panel showing average first contact time with week-over-week trends, and a full-funnel Leads by Source table tracing every lead from source to sold</li>
-          <li><strong>Action Items (redesigned):</strong> replaced an unusable flat list of "Reach out to customer" items with a prioritised card-based queue: urgency indicators, typed actions (e.g., "Schedule Test Drive," "Trade-In Follow-Up"), due dates, and one-click follow-ups</li>
-          <li><strong>Appointments:</strong> appointment tracking with show rate visibility, confirmation cadence, and the booking-to-sold funnel dealers use to evaluate ROI</li>
-          <li><strong>Leads by Source:</strong> channel-level performance breakdown (internet, walk-in, phone, other) with volume tiles, connect rates, appointment rates, show rates, and close rates: separating "our work" from "dealership work" with a visual dashed border</li>
-          <li>Created a demo scenario system with mock data pipelines so stakeholders could click through the product before backend APIs existed</li>
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">How I validated it</div>
+      <h2 class="st">I didn't design in isolation.</h2>
+      <p>I put the prototype in front of real dealers and let their feedback reshape the product. The screens weren't designed from assumptions: the customer conversations directly informed what went on them.</p>
+      <div class="quote">
+        <div class="q">"If you had to meet your GM tomorrow morning and present that the agent is actually doing some real work: is this good enough?"</div>
+        <div class="attr"><b>My question to a BDC manager during validation.</b> She immediately did live math on the screen: 127 appointments × 80% show rate = 101 walk-ins × 30% close = 34 cars sold. That told me two things: the funnel strip was the right format, and the numbers had to survive a dealer doing mental math on the spot.</div>
+      </div>
+      <div class="quote">
+        <div class="q">"That's the stuff that makes salespeople's heads spin. They just need to be served up on a platter: do this next. To sell a car."</div>
+        <div class="attr"><b>An industry veteran during the demo.</b> This directly shaped the action-items redesign: away from a flat list of every call's follow-up, toward a prioritised queue with one-click actions. A salesperson should open the page and know exactly what to do next without reading a transcript.</div>
+      </div>
+      <div class="quote">
+        <div class="q">"How many appointments set, how many showed, how many sold? That's what I look at before I sign up for another month."</div>
+        <div class="attr"><b>A multi-rooftop dealer GM,</b> then the critical qualifier: "Customers just say yes to an appointment to get you off the phone. So the actual conversations of 'yes, I am interested': that's what matters." He was warning us about vanity metrics in our own product. That is why the dashboard leads with a full-funnel table tracing every lead from source to sold, by channel.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">What these conversations shaped</div>
+      <h2 class="st">From feedback to screen.</h2>
+      <div class="sub">
+        <h4>Overview dashboard</h4>
+        <p>The top strip shows five numbers at a glance: leads interacted, qualified, after-hours, human handoffs, and appointments booked. This is the "10-second check" the BDC manager validated: is the agent working or not?</p>
+        <ul class="flist">
+          <li><b>Speed-to-Lead panel:</b> hero metric is average first-contact time with week-over-week comparison, plus leads instantly reached, engaged, appointments from instant response, and % of CRM leads captured.</li>
+          <li><b>Leads by Source table:</b> full funnel by source across leads, connect rate, appointments, visits, show rate, sold, and close rate. The close-rate column is separated with a dashed border to distinguish "our work" from "dealership work."</li>
         </ul>
       </div>
-
-      <div class="stats-row" style="margin-top: 28px;">
-        <div class="stat">
-          <div class="num">90+</div>
-          <div class="desc">Component files</div>
-        </div>
-        <div class="stat">
-          <div class="num">6,600+</div>
-          <div class="desc">Lines of code</div>
-        </div>
-        <div class="stat">
-          <div class="num">10</div>
-          <div class="desc">Dashboard modules</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── How I Validated It ── -->
-  <section class="section">
-    <div class="container">
-      <h2>How I Validated It</h2>
-      <p>
-        I didn't design in isolation. I put the prototype in front of real dealers and let their feedback reshape the product. The wireframes weren't designed from assumptions: the customer conversations directly informed what went on the screen.
-      </p>
-
-      <div style="margin-top: 24px;">
-        <div class="quote-block">
-          "If you had to meet your GM tomorrow morning and present that the agent is actually doing some real work: is this good enough?"
-          <div class="attribution">My question to a BDC manager during console validation. She immediately started doing live math on the screen: 127 appointments &times; 80% show rate = 101 walk-ins &times; 30% close rate = 34 cars sold. That told me two things: the funnel metrics strip was the right format, and the numbers had to survive a dealer doing mental math on the spot.</div>
-        </div>
-
-        <div class="quote-block">
-          "That's the stuff that makes salespeople's heads spin. They just need to be served up on a platter: do this next. To sell a car."
-          <div class="attribution">An industry veteran during the console demo. This directly shaped how I redesigned the action items experience: away from a flat list of every call's follow-up, toward a prioritised queue with one-click actions. A salesperson should open this page and know exactly what to do next without reading a transcript.</div>
-        </div>
-
-        <div class="quote-block">
-          "How many appointments set, how many showed, how many sold? That's the most important thing. That's what I look at before I sign up for another month."
-          <div class="attribution">A multi-rooftop dealer GM. And then the critical qualifier: "Customers just say yes to an appointment to get you off the phone. So the actual conversations of 'yes, I am interested': that's what matters." He was warning us about vanity metrics in our own product. This is why the dashboard leads with a full-funnel Leads by Source table that traces every lead from source to sold, broken down by channel.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── What I Shipped ── -->
-  <section class="section">
-    <div class="container">
-      <h2>What These Conversations Shaped</h2>
-      <div class="content-section">
-        <h4>Overview Dashboard</h4>
-        <p style="margin-bottom: 12px;">
-          The top strip shows five numbers at a glance: leads interacted, leads qualified, after-hours leads, human handoffs, and appointments booked. This is the "10-second check" the BDC manager validated: is the agent working or not?
-        </p>
-        <ul>
-          <li><strong>Speed-to-Lead panel:</strong> Hero metric is average first contact time with week-over-week comparison. Four supporting metrics: leads instantly reached, leads engaged, appointments from instant response, and % of CRM leads captured</li>
-          <li><strong>Leads by Source table:</strong> Full funnel by source (internet, walk-in, phone, other) across leads, connect rate, appointments, visits, show rate, sold, and close rate. The close rate column is separated with a dashed border to visually distinguish "our work" from "dealership work"</li>
-        </ul>
-      </div>
-
-      <div class="content-section" style="margin-top: 24px;">
-        <h4>Action Items (Redesigned)</h4>
-        <p style="margin-bottom: 12px;">
-          The old action items page was a flat list of "Reach out to customer" items on every call: unusable noise. The redesign, directly shaped by the "serve it on a platter" feedback:
-        </p>
-        <ul>
-          <li>Tabs by status (Open, In Progress, Completed) with counts</li>
-          <li>Each card shows customer name, typed action (e.g., "Schedule Test Drive," "Trade-In Follow-Up"), urgency indicator, and due date</li>
-          <li>Click-through opens a slide-out with full context: conversation summary, customer preferences, vehicle of interest, and a one-click action</li>
+      <div class="sub">
+        <h4>Action Items (redesigned)</h4>
+        <p>The old page was a flat list of "Reach out to customer" on every call: unusable noise. The redesign, shaped by the "serve it on a platter" feedback:</p>
+        <ul class="flist">
+          <li>Tabs by status (Open, In Progress, Completed) with counts.</li>
+          <li>Each card shows customer name, typed action, urgency indicator, and due date.</li>
+          <li>Click-through opens a slide-out with full context: conversation summary, customer preferences, vehicle of interest, and a one-click action.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- ── Footer ── -->
-  <section class="footer">
-    <div class="container">
-      <a href="index.html" class="back-link" style="margin-bottom: 16px;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
-        Back to portfolio
-      </a>
-      <p style="margin-top: 12px;">Built with Claude Code, obviously.</p>
+  <footer>
+    <div class="wrap">
+      <div class="foot-nav">
+        <a href="index.html" class="btn btn-ghost">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+          Back to all work
+        </a>
+        <a href="otto.html" class="btn btn-ghost">Next: Otto →</a>
+      </div>
+      <div class="foot-sig">
+        <span class="s">Yash: a PM who builds.</span>
+        <span>Built with Claude Code, obviously.</span>
+      </div>
     </div>
-  </section>
+  </footer>
+
+  <script src="os.js" defer></script>
+
+  <!-- Vercel Web Analytics (static-site snippet; reports only once deployed on Vercel) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
 </html>

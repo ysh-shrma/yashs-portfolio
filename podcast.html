@@ -3,230 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Between the Pages: Personalised Podcast Generator: AI-First PM Portfolio</title>
+  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <title>Between the Pages: Personalised Podcast Generator · Yash</title>
+  <meta name="description" content="Not a transcript read aloud: a two-person show where the book's author joins as a guest and an AI host interviews them, with every question drawn from your role and what you need from the book." />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="os.css" />
   <style>
-    .page-header {
-      padding: 40px 0 48px;
-      border-bottom: 1px solid var(--border);
-    }
-    .page-header h1 {
-      font-size: 36px;
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.025em;
-      margin: 20px 0 12px;
-    }
-    .page-header .subtitle {
-      font-size: 17px;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 600px;
-    }
+    /* Podcast-specific */
+    body::before { background: radial-gradient(ellipse at center, rgba(126,231,135,0.07), transparent 62%); }
+    .kicker { color: var(--green); }
+    .hero h1 { font-size: clamp(32px, 5.5vw, 52px); }
+    .block p em { color: var(--fg); font-style: italic; }
 
-    .section {
-      padding: 48px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .section:last-of-type { border-bottom: none; }
-    .section h2 {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-    .section p {
-      font-size: 15px;
-      color: #374151;
-      line-height: 1.8;
-    }
-    .section p + p { margin-top: 12px; }
+    .player { margin-top:36px; background:linear-gradient(180deg, var(--surface), var(--bg)); border:1px solid var(--border); border-radius:16px; padding:24px; }
+    .player .plabel { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--green); margin-bottom:6px; }
+    .player .ptitle { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:600; margin-bottom:4px; }
+    .player .pmeta { font-size:13px; color:var(--muted); margin-bottom:16px; }
+    .player audio { width:100%; height:42px; }
+    .voices { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+    .voice { display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:var(--muted); background:var(--surface-2); border:1px solid var(--border); border-radius:20px; padding:6px 12px; }
+    .voice .vd { width:8px; height:8px; border-radius:50%; }
 
-    .links-row {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
+    .detail-box.bad { border-left:3px solid var(--faint); }
+    .detail-box.good { border-left:3px solid var(--green); }
 
-    .pipeline-step {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      margin-bottom: 16px;
-    }
-    .pipeline-num {
-      flex-shrink: 0;
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: var(--green);
-      color: white;
-      font-size: 13px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .pipeline-content h4 {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .pipeline-content p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .pipeline { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:26px; }
+    .pstep { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .pstep .n { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--green); margin-bottom:8px; }
+    .pstep h4 { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; margin-bottom:6px; }
+    .pstep p { font-size:13px; color:var(--muted); line-height:1.55; }
+    @media(max-width:680px){ .pipeline{ grid-template-columns:1fr 1fr; } }
+    @media(max-width:440px){ .pipeline{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
 
-  <section class="page-header">
-    <div class="container">
-      <a href="index.html" class="back-link">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
-        Back to portfolio
-      </a>
-      <h1>Between the Pages</h1>
-      <div class="project-labels">
-        <div class="project-label label-green">AI Pipeline</div>
-        <div class="project-label label-personal">Personal</div>
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand"><span class="dot"></span>yash<span style="color:var(--faint)">/pm</span></a>
+      <div class="nav-right">
+        <button class="theme-toggle" type="button" aria-label="Toggle light or dark theme">
+          <svg class="i-sun" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+          <svg class="i-moon" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
+        </button>
+        <a href="index.html" class="back">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+          All work
+        </a>
       </div>
-      <p class="subtitle">
-        A personalised book-to-podcast generator. Upload a book, answer a short profile, and get a two-voice audio podcast where the framing, examples, and takeaways adapt to your context.
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="kicker">Personal · AI pipeline</div>
+      <h1>Between the Pages: a book, as a conversation about you.</h1>
+      <p class="lede">
+        Not a transcript read aloud. It is a <strong>two-person show</strong>: the book's author "joins" as a guest, and an AI host interviews them, with <strong>every question drawn from your role and what you need from the book</strong>. Same book, different episode for a PM and a designer.
       </p>
-      <div class="links-row">
-        <a href="https://between-the-pages.vercel.app/" target="_blank" rel="noopener" class="live-link">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-          Try It Live
+
+      <div class="player">
+        <div class="plabel">▶ 60-second sample</div>
+        <div class="ptitle">Continuous Discovery Habits · Teresa Torres</div>
+        <div class="pmeta">The "host" interviews the "author," framed for a PM working on AI agents.</div>
+        <div class="voices">
+          <span class="voice"><span class="vd" style="background:var(--blue)"></span>Host · asks your questions</span>
+          <span class="voice"><span class="vd" style="background:var(--accent)"></span>Author · answers from the book</span>
+        </div>
+        <audio controls preload="none" src="assets/podcast-sample.mp3"></audio>
+      </div>
+
+      <div class="hero-actions">
+        <a href="https://between-the-pages.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+          Try it live
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ── Why I Built This ── -->
-  <section class="section">
-    <div class="container">
-      <h2>Why I Built This</h2>
-      <p>
-        I don't have a reading habit, but I kept running into books people around me swore by. I can listen to podcasts though, so one solution was to build a tool that converts books into audio.
-      </p>
-      <p>
-        Except every existing tool (including NotebookLM) generates the same content for everyone, with generic examples that don't map to what I'm actually dealing with at work. A PM managing an AI agent for auto dealerships and a designer at a fintech startup should get completely different takeaways from the same book.
-      </p>
-      <p>
-        I built this to generate a podcast that <em>knows who I am</em> and what problems I'm trying to solve.
-      </p>
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">Why I built this</div>
+      <h2 class="st">I don't read. But I'll happily listen to the right conversation.</h2>
+      <p>I kept running into books people around me swore by, and I can listen to podcasts, so the obvious move was to turn books into audio.</p>
+      <p>Except every existing tool (including NotebookLM) generates the <em>same</em> episode for everyone, with generic examples that don't map to what I actually deal with at work. A PM running an AI agent for auto dealerships and a designer at a fintech startup should take completely different things away from the same book.</p>
+      <p>So I built one that <em>knows who I am</em>, and stages the book as an interview: the host asks the questions I would ask, and the author answers.</p>
     </div>
   </section>
 
-  <!-- ── What Makes It Different ── -->
-  <section class="section">
-    <div class="container">
-      <h2>What Makes It Different</h2>
-      <div class="detail-grid" style="margin-top: 16px;">
-        <div class="detail-box">
-          <div class="label">The problem with existing tools</div>
-          <div class="value">Every book-to-audio tool gives everyone the same output: same examples, same framing, same generic takeaways regardless of who you are or what you're working on</div>
-        </div>
-        <div class="detail-box">
-          <div class="label">What this does instead</div>
-          <div class="value">You fill out a short profile (role, challenges, what you're trying to learn), and the entire podcast: framing, examples, takeaways: adapts to your context. A PM and a designer get different podcasts from the same book</div>
-        </div>
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">What makes it different</div>
+      <h2 class="st">A conversation, shaped around you.</h2>
+      <div class="detail-grid">
+        <div class="detail-box bad"><div class="k">Every other tool</div><div class="v">One output for everyone: same examples, same framing, same generic takeaways, regardless of who you are or what you're working on. Often a flat narration.</div></div>
+        <div class="detail-box good"><div class="k">Between the Pages</div><div class="v">A two-voice interview. You fill a short profile (role, challenges, what you want from the book), and the host's questions plus the author's framing and examples all adapt to your context.</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ── How It Works ── -->
-  <section class="section">
-    <div class="container">
-      <h2>How It Works</h2>
-      <div style="margin-top: 20px;">
-        <div class="pipeline-step">
-          <div class="pipeline-num">1</div>
-          <div class="pipeline-content">
-            <h4>Extract</h4>
-            <p>EPUB is parsed into clean chapter text. TOC, copyright, and blank pages are filtered out automatically.</p>
-          </div>
-        </div>
-        <div class="pipeline-step">
-          <div class="pipeline-num">2</div>
-          <div class="pipeline-content">
-            <h4>Digest</h4>
-            <p>Each chapter is summarised by an LLM, with your profile context injected so the digest emphasises what matters to you.</p>
-          </div>
-        </div>
-        <div class="pipeline-step">
-          <div class="pipeline-num">3</div>
-          <div class="pipeline-content">
-            <h4>Script</h4>
-            <p>Chapter digests are woven into a two-voice podcast script (host + author). The framing and examples are personalised to your role and challenges.</p>
-          </div>
-        </div>
-        <div class="pipeline-step">
-          <div class="pipeline-num">4</div>
-          <div class="pipeline-content">
-            <h4>Synthesize</h4>
-            <p>Script is converted to multi-voice audio using Edge neural voices, batched asynchronously, then stitched into a single podcast MP3.</p>
-          </div>
-        </div>
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">How it works</div>
+      <h2 class="st">Four stages, each composable and cacheable.</h2>
+      <div class="pipeline">
+        <div class="pstep"><div class="n">01 · extract</div><h4>Extract</h4><p>The EPUB is parsed into clean chapter text. TOC, copyright, and blank pages are filtered out automatically.</p></div>
+        <div class="pstep"><div class="n">02 · digest</div><h4>Digest</h4><p>Each chapter is summarised with your profile injected, so the digest emphasises what matters to you.</p></div>
+        <div class="pstep"><div class="n">03 · script</div><h4>Script</h4><p>Digests are woven into a two-voice interview script (host + author). Questions and examples are personalised to your role.</p></div>
+        <div class="pstep"><div class="n">04 · synthesize</div><h4>Synthesize</h4><p>The script becomes multi-voice audio via neural TTS, batched asynchronously, then stitched into one MP3.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ── What I Built ── -->
-  <section class="section">
-    <div class="container">
-      <h2>What I Built with Claude Code</h2>
-
-      <div class="tags" style="margin-top: 16px;">
-        <span class="tag">Python</span>
-        <span class="tag">React</span>
-        <span class="tag">Claude API</span>
-        <span class="tag">Edge TTS</span>
-        <span class="tag">Async Jobs</span>
-        <span class="tag">pydub</span>
-        <span class="tag">Claude Code</span>
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">What I built</div>
+      <h2 class="st">Built solo, end to end.</h2>
+      <div class="pills">
+        <span class="pill">Python</span><span class="pill">React</span><span class="pill">Claude API</span>
+        <span class="pill">Edge TTS</span><span class="pill">Async Jobs</span><span class="pill">pydub</span><span class="pill">Claude Code</span>
       </div>
-
-      <div class="content-section" style="margin-top: 16px;">
-        <ul>
-          <li>Designed the multi-stage pipeline architecture: extract, digest, script, synthesize: each stage composable and independently cacheable</li>
-          <li>Built the personalisation layer: a short profile questionnaire that feeds context into every stage of the generation, so examples and framing adapt to who you are</li>
-          <li>Engineered the two-voice podcast format (host + author) with natural conversational flow, not robotic alternating monologues</li>
-          <li>Built the full React frontend with upload flow, job status tracking, and an in-browser podcast player</li>
-          <li>Added cost-saving features: cached digests so re-runs don't re-process chapters, skip flags for iteration, and batched async TTS (10 clips at a time) to keep generation fast</li>
-          <li>Built the entire thing solo: spec, Python backend with async job processing, TTS stitching, and frontend</li>
-        </ul>
-      </div>
-
-      <div class="stats-row" style="margin-top: 28px;">
-        <div class="stat">
-          <div class="num">E2E</div>
-          <div class="desc">Built solo</div>
-        </div>
-        <div class="stat">
-          <div class="num">~3,000</div>
-          <div class="desc">Lines of code</div>
-        </div>
-        <div class="stat">
-          <div class="num">30-45m</div>
-          <div class="desc">Podcast output</div>
-        </div>
+      <ul class="flist">
+        <li><b>The multi-stage pipeline:</b> extract, digest, script, synthesize, each stage composable and independently cacheable.</li>
+        <li><b>The personalisation layer:</b> a short profile questionnaire that feeds context into every stage, so the host's questions and the author's examples adapt to who you are.</li>
+        <li><b>The two-voice interview format:</b> host and author with natural conversational flow, not robotic alternating monologues.</li>
+        <li><b>The full React frontend:</b> upload flow, job-status tracking, and an in-browser player.</li>
+        <li><b>Cost and speed work:</b> cached digests so re-runs don't reprocess chapters, skip flags for iteration, and batched async TTS (10 clips at a time).</li>
+      </ul>
+      <div class="stats-row">
+        <div class="stat"><div class="num">2-voice</div><div class="desc">host + author</div></div>
+        <div class="stat"><div class="num">~3,000</div><div class="desc">lines of code</div></div>
+        <div class="stat"><div class="num">30–45m</div><div class="desc">podcast output</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ── Footer ── -->
-  <section class="footer">
-    <div class="container">
-      <a href="index.html" class="back-link" style="margin-bottom: 16px;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
-        Back to portfolio
-      </a>
-      <p style="margin-top: 12px;">Built with Claude Code, obviously.</p>
+  <footer>
+    <div class="wrap">
+      <div class="foot-nav">
+        <a href="index.html" class="btn btn-ghost">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+          Back to all work
+        </a>
+        <a href="otto.html" class="btn btn-ghost">Next: Otto →</a>
+      </div>
+      <div class="foot-sig">
+        <span class="s">Yash: a PM who builds.</span>
+        <span>Built with Claude Code, obviously.</span>
+      </div>
     </div>
-  </section>
+  </footer>
+
+  <script src="os.js" defer></script>
+
+  <!-- Vercel Web Analytics (static-site snippet; reports only once deployed on Vercel) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
 </html>

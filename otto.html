@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <title>Otto: An Autonomous Chief of Staff for PMs · Yash</title>
+  <meta name="description" content="Otto reads every inbound channel, surfaces the few things that need me, drafts replies in my voice, runs my week, and learns from every correction. It never sends on its own. Built with Claude, claude.ai connectors, Next.js, and Turso." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="os.css" />
+  <style>
+    /* Otto-specific */
+    body::before { background: radial-gradient(ellipse at center, rgba(179,146,240,0.10), transparent 62%); }
+    .kicker { color: var(--purple); }
+
+    .glance { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:36px; }
+    .g-item { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .g-item .k { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--faint); margin-bottom:8px; }
+    .g-item .v { font-size:14px; color:var(--fg); line-height:1.5; }
+    @media(max-width:680px){ .glance{ grid-template-columns:1fr; } }
+
+    .prob { display:grid; gap:12px; margin-top:26px; }
+    .prob-row { display:flex; gap:16px; align-items:flex-start; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; }
+    .prob-row .num { font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:600; color:var(--accent); flex-shrink:0; min-width:36px; }
+    .prob-row .txt { font-size:15px; color:var(--body); line-height:1.6; }
+    .prob-row .txt b { color:var(--fg); font-weight:600; }
+
+    .loop { display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; align-items:stretch; }
+    .loop-step { flex:1; min-width:120px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
+    .loop-step .n { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--purple); margin-bottom:6px; }
+    .loop-step .l { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; }
+    .loop-step .d { font-size:12px; color:var(--muted); margin-top:4px; line-height:1.4; }
+
+    .caps { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:26px; }
+    .cap { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px; }
+    .cap .k { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); margin-bottom:10px; }
+    .cap h4 { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:600; margin-bottom:8px; }
+    .cap p { font-size:14px; color:var(--muted); line-height:1.65; }
+    @media(max-width:680px){ .caps{ grid-template-columns:1fr; } }
+
+    .highlight { background:color-mix(in srgb, var(--purple) 7%, var(--surface)); border:1px solid color-mix(in srgb, var(--purple) 30%, transparent); border-radius:18px; padding:30px; margin-top:26px; }
+    .highlight h3 { font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600; margin-bottom:12px; }
+    .learn-signals { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:20px 0; }
+    .signal { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; }
+    .signal .s-n { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--purple); margin-bottom:6px; }
+    .signal .s-t { font-weight:600; font-size:14.5px; margin-bottom:5px; }
+    .signal p { font-size:13px; color:var(--muted); line-height:1.55; }
+    @media(max-width:680px){ .learn-signals{ grid-template-columns:1fr; } }
+    .example { background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:20px; margin-top:16px; }
+    .example .lab { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--green); margin-bottom:10px; }
+    .example p { font-size:14px; color:var(--body); line-height:1.7; }
+    .example ol { margin:10px 0 0 18px; font-size:14px; color:var(--body); line-height:1.7; }
+    .example ol li { margin-bottom:4px; }
+    .example .close { margin-top:12px; color:var(--fg); }
+
+    .status { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px; }
+    .status-col { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px; }
+    .status-col.live { border-color:color-mix(in srgb, var(--green) 30%, transparent); }
+    .status-col .h { font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; display:inline-flex; align-items:center; gap:8px; }
+    .status-col.live .h { color:var(--green); }
+    .status-col.next .h { color:var(--muted); }
+    .status-col ul { list-style:none; }
+    .status-col li { font-size:14px; color:var(--body); line-height:1.55; padding:8px 0 8px 24px; position:relative; border-bottom:1px solid var(--border); }
+    .status-col li:last-child { border-bottom:none; }
+    .status-col li::before { position:absolute; left:0; top:8px; font-family:'JetBrains Mono',monospace; }
+    .status-col.live li::before { content:"✓"; color:var(--green); }
+    .status-col.next li::before { content:"→"; color:var(--faint); }
+    @media(max-width:680px){ .status{ grid-template-columns:1fr; } }
+
+    .arch { margin-top:26px; }
+    .arch-node { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; text-align:center; }
+    .arch-node .t { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; }
+    .arch-node .s { font-size:13px; color:var(--muted); margin-top:4px; }
+    .arch-node.brain { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+    .arch-node.spine { border-color:var(--blue); background:color-mix(in srgb, var(--blue) 5%, var(--surface)); }
+    .arch-node.face { border-color:var(--purple); background:color-mix(in srgb, var(--purple) 5%, var(--surface)); }
+    .arch-arrow { text-align:center; color:var(--faint); font-family:'JetBrains Mono',monospace; font-size:12px; padding:8px 0; }
+    .arch-sources { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px; }
+    .src { background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:12px 8px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); }
+    .src b { display:block; color:var(--fg); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; margin-bottom:2px; }
+    @media(max-width:680px){ .arch-sources{ grid-template-columns:1fr 1fr; } }
+
+    .ctable { width:100%; border-collapse:collapse; margin-top:22px; font-size:14px; }
+    .ctable th { text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); padding:12px 14px; border-bottom:1px solid var(--border-2); }
+    .ctable td { padding:14px; border-bottom:1px solid var(--border); color:var(--body); vertical-align:top; line-height:1.5; }
+    .ctable td:first-child { color:var(--accent); font-weight:600; white-space:nowrap; }
+    .ctable tr:last-child td { border-bottom:none; }
+
+    .rails { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px; }
+    .rail { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .rail .t { font-weight:600; font-size:14.5px; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+    .rail .t::before { content:"◆"; color:var(--green); font-size:11px; }
+    .rail p { font-size:13.5px; color:var(--muted); line-height:1.55; }
+    @media(max-width:680px){ .rails{ grid-template-columns:1fr; } }
+
+    .demo-list { display:grid; gap:12px; margin-top:24px; }
+    .demo { display:flex; gap:14px; align-items:flex-start; }
+    .demo .b { width:26px; height:26px; border-radius:7px; background:var(--surface-2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; margin-top:2px; }
+    .demo .txt { font-size:15px; color:var(--body); line-height:1.6; }
+    .demo .txt b { color:var(--fg); font-weight:600; }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand"><span class="dot"></span>yash<span style="color:var(--faint)">/pm</span></a>
+      <div class="nav-right">
+        <button class="theme-toggle" type="button" aria-label="Toggle light or dark theme">
+          <svg class="i-sun" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+          <svg class="i-moon" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></svg>
+        </button>
+        <a href="index.html" class="back">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+          All work
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="kicker">Flagship · Agentic AI system</div>
+      <h1>Otto: an autonomous chief of staff for product managers.</h1>
+      <p class="lede">
+        Otto reads everything that comes at me (email, Slack, support tickets, meetings, planning sheets), decides the few things that actually need me, drafts my responses in my own voice, runs my weekly plan, and gives me <strong>one calm place to work from</strong>. It never sends anything on its own, and it gets better every day by learning from what I actually do.
+      </p>
+      <div class="promise">The core promise: reclaim the operational hours, so I can spend time on the product thinking only I can do.</div>
+
+      <div class="glance">
+        <div class="g-item"><div class="k">What</div><div class="v">A personal AI operations layer that triages inbound, drafts replies, and manages my week.</div></div>
+        <div class="g-item"><div class="k">How it runs</div><div class="v">A scheduled agent sweeps every 2 hours (12pm to 12am IST) into a shared datastore that powers a web hub.</div></div>
+        <div class="g-item"><div class="k">Autonomy</div><div class="v">Drafts everything, sends nothing. Every outbound action waits for my one click.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">The problem</div>
+      <h2 class="st">Most of my day was not product work. It was operational drag.</h2>
+      <p>I am a PM, but the job kept getting buried under the scan: reading everything just to find the few things that needed me. The deep product work kept getting pushed to "later."</p>
+      <div class="prob">
+        <div class="prob-row"><div class="num">01</div><div class="txt"><b>Email.</b> A daily stream of reports, digests, and threads I am only cc'd on. Only a few actually need me, but I still had to read through to find them.</div></div>
+        <div class="prob-row"><div class="num">02</div><div class="txt"><b>Slack.</b> Channels and DMs always open. The one message where I am genuinely needed gets buried in the noise and missed.</div></div>
+        <div class="prob-row"><div class="num">03</div><div class="txt"><b>Support tickets.</b> They pile up, and a handful need a decision from me: a comment to dev, or a new sprint item. Finding those few was a daily manual scan.</div></div>
+        <div class="prob-row"><div class="num">04</div><div class="txt"><b>One shared planning sheet, ten tabs.</b> Weekly plan, product to-dos, client issues, backlog, CEO feedback. Keeping my own priorities straight across all of it was a chore.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">What Otto is</div>
+      <h2 class="st">A single agent with a simple loop, on a schedule.</h2>
+      <p>Every run, it senses all my inbound, decides what needs me, drafts what it can in my voice, folds new work into my plan, writes everything to one datastore, and learns from what I sent since the last run. Built on a hard rule: <strong>Otto never sends. It only ever stages drafts.</strong> The final send is always my click, in the real tool.</p>
+      <div class="loop">
+        <div class="loop-step"><div class="n">01</div><div class="l">Sense</div><div class="d">Read every channel</div></div>
+        <div class="loop-step"><div class="n">02</div><div class="l">Triage</div><div class="d">Needs me / FYI / noise</div></div>
+        <div class="loop-step"><div class="n">03</div><div class="l">Draft</div><div class="d">In my voice</div></div>
+        <div class="loop-step"><div class="n">04</div><div class="l">Plan</div><div class="d">Fold into my week</div></div>
+        <div class="loop-step"><div class="n">05</div><div class="l">Surface</div><div class="d">One Action Hub</div></div>
+        <div class="loop-step"><div class="n">06</div><div class="l">Learn</div><div class="d">Converge on me</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">What it does</div>
+      <h2 class="st">Six jobs, one pass.</h2>
+      <div class="caps">
+        <div class="cap"><div class="k">// sense</div><h4>Reads everything, in one pass</h4><p>Gmail threads, Slack DMs and mentions, Freshdesk tickets (discovered via email, enriched via API), meeting transcripts from Arali matched to my calendar, and all ten tabs of the team planning sheet.</p></div>
+        <div class="cap"><div class="k">// triage</div><h4>Turns noise into signal</h4><p>Every item is classified needs me / FYI / noise and bucketed. Sales Inbound (my area) ranks highest, then customers, then leadership. Each item gets a response deadline so nothing ages past my SLA.</p></div>
+        <div class="cap"><div class="k">// draft</div><h4>Drafts in my voice, knows when not to</h4><p>A voice profile learned from my real sent messages: short, direct, bullets, correct register (polished English for customers, casual Hinglish for internal Slack). A confidence gate means it never fakes a weak draft.</p></div>
+        <div class="cap"><div class="k">// plan</div><h4>Runs my week</h4><p>Tasks pulled from emails, Slack, tickets, meeting action items, and my rows across every sheet tab, into a Notion-style board with a "do this now" order: sprint work leads, but a breached deadline jumps the queue.</p></div>
+        <div class="cap"><div class="k">// surface</div><h4>One Action Hub</h4><p>Today, Triage, Needs Your Input, Tasks, Tickets. Each card is self-contained: a plain-language summary, a timeline, the key facts, and the draft, all inline, so I rarely open the original tool.</p></div>
+        <div class="cap"><div class="k">// learn</div><h4>Gets better every day</h4><p>The piece that makes it a chief of staff, not a triage bot. A correction becomes a standing rule the agent applies everywhere, from then on. (Full detail below.)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">The part I care about most</div>
+      <h2 class="st">A self-learning loop: teach it once, not every time.</h2>
+      <p>Most AI assistants are static: as good on day 100 as day 1, and you keep making the same corrections forever. Otto is built to <strong>converge on me over time</strong>. A correction is not a throwaway edit. It becomes a standing rule applied everywhere.</p>
+
+      <div class="highlight">
+        <h3>It learns from four signals</h3>
+        <div class="learn-signals">
+          <div class="signal"><div class="s-n">signal 01</div><div class="s-t">Explicit corrections</div><p>"Use bullets," "I own Sales Inbound." Written straight into memory and honored immediately, on existing drafts and all future ones.</p></div>
+          <div class="signal"><div class="s-n">signal 02</div><div class="s-t">Draft-vs-sent diffs</div><p>It compares what I actually sent to what it had staged. Every wording or tone change becomes a voice rule. Drafts drift toward sounding exactly like me.</p></div>
+          <div class="signal"><div class="s-n">signal 03</div><div class="s-t">Exemplars it could not do</div><p>When it hits the confidence gate and I handle it myself, it captures how I handled it. Next time, that situation is draftable. The bottleneck shrinks.</p></div>
+          <div class="signal"><div class="s-n">signal 04</div><div class="s-t">Judgment calls</div><p>For debatable tickets (bug for dev, or feature for the sprint?) it records its guess and my actual decision, and learns my line on a hard distinction.</p></div>
+        </div>
+
+        <div class="example">
+          <div class="lab">▸ A real example, from the live system</div>
+          <p>I told Otto two things in one message: prefer bullets, and I own Sales Inbound. Within the same session it:</p>
+          <ol>
+            <li>wrote two rules into its <span class="mono" style="color:var(--accent-2)">voice_profile</span> (bullets, and my role, weighted high),</li>
+            <li>logged the correction in <span class="mono" style="color:var(--accent-2)">learnings</span>,</li>
+            <li>re-generated the three drafts already sitting in my Hub into clean bulleted form, and</li>
+            <li>started ranking anything touching Sales Inbound highest in triage.</li>
+          </ol>
+          <p class="close">I taught it once. It applied the lesson to existing work and everything after. That is the whole idea.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">How it is built</div>
+      <h2 class="st">Brain, spine, face: cleanly separated.</h2>
+      <p>The same datastore serves a scheduled agent and an interactive app. That separation is the whole architecture.</p>
+
+      <div class="arch">
+        <div class="arch-node brain">
+          <div class="t">The Sweep · the brain</div>
+          <div class="s">a scheduled Claude agent running a versioned playbook, every 2 hours</div>
+        </div>
+        <div class="arch-sources">
+          <div class="src"><b>Gmail</b>connector</div>
+          <div class="src"><b>Slack</b>connector</div>
+          <div class="src"><b>Freshdesk</b>REST API</div>
+          <div class="src"><b>Arali + Cal + Sheet</b>connectors · 10 tabs</div>
+        </div>
+        <div class="arch-arrow">↓ &nbsp; triage · draft (voice + personas) · plan · learn &nbsp; ↓</div>
+        <div class="arch-node spine">
+          <div class="t">Datastore · the spine</div>
+          <div class="s">Turso / SQLite: items, drafts, tasks, sprints, voice_profile, exemplars, learnings, ticket_decisions</div>
+        </div>
+        <div class="arch-arrow">↓ &nbsp; reads / approvals write back &nbsp; ↓</div>
+        <div class="arch-node face">
+          <div class="t">Action Hub · the face</div>
+          <div class="s">Next.js: Today · Triage · Needs Input · Tasks board · Tickets</div>
+        </div>
+        <div class="arch-arrow">↓ &nbsp; I approve / edit / reject &nbsp; ↓</div>
+        <div class="arch-node">
+          <div class="t">Native in-thread drafts</div>
+          <div class="s">in Gmail / Slack / Freshdesk. I click send, always.</div>
+        </div>
+      </div>
+
+      <table class="ctable">
+        <thead><tr><th>Layer</th><th>What it is</th><th>Built with</th></tr></thead>
+        <tbody>
+          <tr><td>Brain</td><td>A versioned playbook the scheduled agent follows each run</td><td>Claude (Max), a Markdown workflow spec, persona files</td></tr>
+          <tr><td>Hands</td><td>Reads inbound and stages drafts</td><td>claude.ai connectors (Gmail, Slack, Calendar, Drive, Arali MCP) + Freshdesk REST API</td></tr>
+          <tr><td>Spine</td><td>One datastore the agent and hub share</td><td>Turso (libSQL / SQLite) over its HTTP API</td></tr>
+          <tr><td>Face</td><td>The Action Hub web app</td><td>Next.js (App Router), server components + API routes, plain CSS</td></tr>
+          <tr><td>Memory</td><td>Learned voice, exemplars, corrections, ticket calls</td><td>Datastore tables the sweep reads before every draft</td></tr>
+          <tr><td>Clock</td><td>The 2-hour cadence</td><td>A scheduled cloud routine</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">Why it is safe to trust</div>
+      <h2 class="st">Guardrails, by design.</h2>
+      <p>This is wired into my real accounts. The defaults are chosen so nothing embarrassing or wrong can go out on its own.</p>
+      <div class="rails">
+        <div class="rail"><div class="t">Never sends</div><p>The agent only creates drafts. Sending is always a human click in the real tool.</p></div>
+        <div class="rail"><div class="t">In-thread only</div><p>Drafts are replies on the existing thread, never new messages, so nothing goes out of context.</p></div>
+        <div class="rail"><div class="t">Confidence gate</div><p>Low-confidence situations become "needs your input" with the exact gap, never a plausible-but-wrong draft.</p></div>
+        <div class="rail"><div class="t">Read-only where it should be</div><p>The shared team sheet is read every run and never written back.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">Honest status</div>
+      <h2 class="st">What is live vs what is next.</h2>
+      <p>It runs, on my real inbox, today. Here is exactly where the line sits, because a portfolio that oversells is worse than one that is precise.</p>
+      <div class="status">
+        <div class="status-col live">
+          <div class="h">● Live and working</div>
+          <ul>
+            <li>The datastore, schema, and zero-dependency write path</li>
+            <li>The Action Hub: Today, Triage, Needs Your Input, Tasks board, Tickets, with approve / edit / reject persisting</li>
+            <li>Reads across Gmail, Slack, the Freshdesk API, and all ten sheet tabs</li>
+            <li>Voice profile, drafting in my style, and the confidence gate</li>
+            <li>The learning store: corrections captured and applied live; ticket guesses logged awaiting my ruling</li>
+            <li>Prioritization with SLA guardrails</li>
+          </ul>
+        </div>
+        <div class="status-col next">
+          <div class="h">○ Next</div>
+          <ul>
+            <li>Register the unattended routine so the sweep runs every 2 hours on its own (manual runs already produce real drafts + data)</li>
+            <li>Automatic draft-vs-sent diffing and exemplar capture on the schedule</li>
+            <li>Auto-draft first versions of PRDs and specs, with open questions surfaced</li>
+            <li>A weekly self-improvement pass, with draft-acceptance rate as the north-star metric</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap reveal">
+      <div class="eyebrow">What this demonstrates</div>
+      <h2 class="st">The point of the project.</h2>
+      <div class="demo-list">
+        <div class="demo"><div class="b">01</div><div class="txt"><b>Problem framing from lived pain:</b> three concrete, measurable operational problems, designed to specific outcomes ("nothing that needs me waits more than a few hours").</div></div>
+        <div class="demo"><div class="b">02</div><div class="txt"><b>AI product design, not just prompting:</b> an agent with a clear loop, a confidence gate, human-in-the-loop review, and a learning system, including honest handling of when the agent should defer.</div></div>
+        <div class="demo"><div class="b">03</div><div class="txt"><b>Systems thinking:</b> a clean split of brain, spine, and face, so one datastore serves both a scheduled agent and an interactive app.</div></div>
+        <div class="demo"><div class="b">04</div><div class="txt"><b>Taste and craft:</b> a deliberate design language and interaction model (self-contained cards, Notion-style editing) rather than a default dashboard.</div></div>
+        <div class="demo"><div class="b">05</div><div class="txt"><b>Judgment under constraints:</b> shipping within a "no LLM API keys, use existing connectors" rule, fixing real issues (a serialization bug, a workbook with ten tabs when one was being read), and choosing safe defaults.</div></div>
+        <div class="demo"><div class="b">06</div><div class="txt"><b>Shipping:</b> it runs, on my real inbox, today.</div></div>
+      </div>
+
+      <div class="pills">
+        <span class="pill">Claude (Max)</span>
+        <span class="pill">claude.ai connectors</span>
+        <span class="pill">Freshdesk API</span>
+        <span class="pill">Turso / libSQL</span>
+        <span class="pill">Next.js (App Router)</span>
+        <span class="pill">plain CSS</span>
+        <span class="pill">scheduled routine</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-nav">
+        <a href="index.html" class="btn btn-ghost">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+          Back to all work
+        </a>
+        <a href="spyne-console.html" class="btn btn-ghost">Next: Spyne Dashboard →</a>
+      </div>
+      <div class="foot-sig">
+        <span class="s">Yash: a PM who builds.</span>
+        <span>Built with Claude Code, obviously.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="os.js" defer></script>
+
+  <!-- Vercel Web Analytics (static-site snippet; reports only once deployed on Vercel) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+
+</body>
+</html>
