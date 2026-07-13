@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <script>(function(){try{var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
   <title>Spyne Dealer Intelligence Dashboard · Yash</title>
   <meta name="description" content="A dealer-facing intelligence dashboard I designed, built, and validated with real dealers: using Claude Code to go from product vision to interactive, validated prototype without a designer." />
   <link rel="icon" type="image/png" href="favicon.png" />

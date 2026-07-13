@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <script>(function(){try{var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
   <title>Between the Pages: Personalised Podcast Generator · Yash</title>
   <meta name="description" content="Not a transcript read aloud: a two-person show where the book's author joins as a guest and an AI host interviews them, with every question drawn from your role and what you need from the book." />
   <link rel="icon" type="image/png" href="favicon.png" />
