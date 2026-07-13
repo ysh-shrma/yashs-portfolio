@@ -141,6 +141,29 @@
     @media (max-width: 640px) { .num-grid { grid-template-columns: repeat(2, 1fr); } }
 
     @media (prefers-reduced-motion: reduce) { .verdict { opacity: 1; transform: none; } }
+
+    /* Home mobile polish */
+    @media (max-width: 560px) {
+      .hero { padding: 46px 0 30px; }
+      .hero h1 { margin-bottom: 20px; }
+      .hero .sub { margin-bottom: 28px; }
+      .hero-actions { gap: 10px; }
+      .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
+      .os, .work, .internals { padding: 48px 0; }
+      .numbers { padding: 40px 0; }
+      .os-grid { margin-top: 28px; gap: 12px; }
+      .ptest { margin-top: 32px; }
+      .ptest-head, .ptest-body { padding: 20px; }
+      .ptest-badge { white-space: normal; }
+      .work-grid { margin-top: 28px; gap: 16px; }
+      .work-card { padding: 22px; }
+      .work-card h3 { font-size: 21px; }
+      .wc-stats { gap: 16px; flex-wrap: wrap; }
+      .wc-foot { gap: 14px; }
+      .terminal { margin-top: 32px; }
+      .term-body { font-size: 12.5px; padding: 18px 16px; }
+      .int-grid { margin-top: 28px; }
+    }
   </style>
 </head>
 <body>
